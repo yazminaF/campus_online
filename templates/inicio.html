@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+  {% if user.is_authenticated %}
+    {% if sin_perfil %}
+      <section class="card">
+        <h2>Asociar perfil</h2>
+        <p>Selecciona tu perfil para asociarlo a tu cuenta:</p>
+        <form method="post" class="form">
+          {% csrf_token %}
+          <label class="field">
+            <span>Perfil</span>
+            <select name="perfil_id" required>
+              <option value="" selected disabled>-- Elige tu perfil --</option>
+              {% for p in perfiles %}
+                <option value="{{ p.id }}">{{ p.nombre }} — {{ p.carrera }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button class="btn primary" type="submit">Vincular y abrir</button>
+        </form>
+      </section>
+    {% else %}
+      <section class="card"><p>Redirigiendo a tu perfil…</p></section>
+    {% endif %}
+  {% else %}
+    <section class="card narrow">
+      <h2>Iniciar sesión</h2>
+      <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label class="field">
+          <span>Usuario</span>
+          {{ form.username }}
+        </label>
+        <label class="field">
+          <span>Contraseña</span>
+          {{ form.password }}
+        </label>
+        <button class="btn primary" type="submit">Ingresar</button>
+      </form>
+    </section>
+  {% endif %}
+{% endblock %}
