@@ -2,18 +2,66 @@
 {% block title %}Perfil{% endblock %}
 {% block content %}
   <section class="card">
-    <h2> Perfil estudiantil de {{ perfil.nombre }}</h2>
+    <h2>Perfil estudiantil de {{ perfil.nombre }}</h2>
+
     <dl class="details">
       <div><dt>RUT</dt><dd>{{ perfil.rut }}</dd></div>
       <div><dt>Carrera</dt><dd>{{ perfil.carrera }}</dd></div>
       <div><dt>Semestre</dt><dd>{{ perfil.semestre }}</dd></div>
       <div><dt>Email</dt><dd>{{ perfil.email }}</dd></div>
-      <div><dt>Nota 1</dt><dd>{{ perfil.nota1|default:"—" }}</dd></div>
-      <div><dt>Nota 2</dt><dd>{{ perfil.nota2|default:"—" }}</dd></div>
-      <div><dt>Nota 3</dt><dd>{{ perfil.nota3|default:"—" }}</dd></div>
-      <div><dt>Nota 4</dt><dd>{{ perfil.nota4|default:"—" }}</dd></div>
-      <div><dt>Promedio</dt><dd>{{ perfil.promedio|default:"—" }}</dd></div>
     </dl>
+
+    {# --- Notas en tabla --- #}
+    <h3 class="mt-2">Notas</h3>
+
+    <style>
+      /* Estilos locales para esta tabla */
+      .tabla-notas{
+        width:100%; border-collapse: collapse; margin: 8px 0 16px;
+        font-size: 14.5px;
+      }
+      .tabla-notas th, .tabla-notas td{
+        padding: 10px 12px; border-bottom: 1px solid #e5e7eb; text-align: left;
+      }
+      .tabla-notas thead th{
+        color: #6b7280; font-weight: 700; background: rgba(0,0,0,0.02);
+      }
+      .tabla-notas tfoot th{ font-weight: 800; }
+    </style>
+
+    <table class="tabla-notas">
+      <thead>
+        <tr>
+          <th>Evaluación</th>
+          <th>Nota</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nota 1</td>
+          <td>{{ perfil.nota1|default_if_none:"—" }}</td>
+        </tr>
+        <tr>
+          <td>Nota 2</td>
+          <td>{{ perfil.nota2|default_if_none:"—" }}</td>
+        </tr>
+        <tr>
+          <td>Nota 3</td>
+          <td>{{ perfil.nota3|default_if_none:"—" }}</td>
+        </tr>
+        <tr>
+          <td>Nota 4</td>
+          <td>{{ perfil.nota4|default_if_none:"—" }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Promedio</th>
+          <th>{{ perfil.promedio|default_if_none:"—" }}</th>
+        </tr>
+      </tfoot>
+    </table>
+
     <a class="btn" href="{% url 'inicio' %}">Volver</a>
   </section>
 {% endblock %}
