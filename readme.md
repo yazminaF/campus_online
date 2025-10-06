@@ -4,6 +4,62 @@ App web en **Django** para gestionar **perfiles de estudiantes**.
 
 Incluye **inicio con login embebido**, **detalle de perfil** con control de acceso y **logout seguro**.
 
+## Cliente de prueba de la API - Guia de uso Rapido 
+
+### Requisitos previos
+
+* Proyecto Django corriendo en local.
+* Entorno virtual activo.
+* Dependencias instaladas (incluye `requests` que usa el cliente).
+  ```powershell
+    python -m pip install -r requirements.txt
+    python -m pip install requests
+  ```
+* El backend corriendo:
+
+  ```powershell
+  python manage.py runserver
+  ```
+
+
+#### 1)Ejecuta la app de consola
+
+En la carpeta raíz del proyecto:
+
+```powershell
+python docs/cli_app/main.py
+```
+
+#### 2) Uso del menú
+
+1. Ingresa **Usuario** y **Contraseña** (los mismos de Django).
+2. El menú ofrece:
+
+   * `1) Ver mi perfil`
+   * `2) Editar mi perfil`
+   * `3) Refrescar access token`.
+   * `0) Salir`.
+
+> Si el access token vence, la app intenta refrescarlo automáticamente y reintenta la operación.
+
+
+
+### 7) Errores comunes (y solución)
+
+* `ModuleNotFoundError: requests` → `python -m pip install requests`.
+* `ConnectionError` / `ECONNREFUSED` → aseguraerse de tener el server con `runserver`.
+* `401 token_not_valid` → usa opción **3** (refrescar) o reinicia la app y ingresar de nuevo credenciales.
+* `404 No encontrado` en “Ver mi perfil” → ese usuario no tiene perfil: se debe crear un `PerfilEstudiante` enlazado al `User`(aunque esta configurado para que se genere automatco con el usuario).
+
+---
+
+
+
+
+
+
+
+
 ## Características
 
 - **Home con login** (sin sesión muestra el formulario; con sesión redirige al perfil).
